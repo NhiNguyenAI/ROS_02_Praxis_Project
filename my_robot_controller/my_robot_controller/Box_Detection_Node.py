@@ -105,23 +105,27 @@ class BoxDetector(Node):
         debug_msg = self.bridge.cv2_to_imgmsg(self.current_frame, "bgr8")
         self.debug_pub.publish(debug_msg)
         
-    # Modify process_frame method:
-    def process_frame_with_yolo(self):
-        # YOLO-specific processing
-        height, width, channels = self.current_frame.shape
+    # # In your __init__ method:
+    # self.net = cv2.dnn.readNet('yolov4.weights', 'yolov4.cfg')
+    # self.layer_names = self.net.getLayerNames()
+    # self.output_layers = [self.layer_names[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]    
+    # # Modify process_frame method:
+    # def process_frame_with_yolo(self):
+    #     # YOLO-specific processing
+    #     height, width, channels = self.current_frame.shape
         
-        # Detecting objects
-        blob = cv2.dnn.blobFromImage(
-            self.current_frame, 
-            0.00392, 
-            (416, 416), 
-            (0, 0, 0), 
-            True, 
-            crop=False
-        )
+    #     # Detecting objects
+    #     blob = cv2.dnn.blobFromImage(
+    #         self.current_frame, 
+    #         0.00392, 
+    #         (416, 416), 
+    #         (0, 0, 0), 
+    #         True, 
+    #         crop=False
+    #     )
         
-        self.net.setInput(blob)
-        outs = self.net.forward(self.output_layers)
+    #     self.net.setInput(blob)
+    #     outs = self.net.forward(self.output_layers)
 
 def main(args=None):
     rclpy.init(args=args)
